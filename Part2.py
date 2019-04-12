@@ -1,11 +1,23 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-
 from PyQt5.QtWidgets import QMessageBox
+from gpiozero import LED
+import RPi.GPIO as GPIO
+
+GPIO.setmode(GPIO.BCM)
+
+led=LED(14)
 
 def btn_clicked():
-        print("Button Pressed")
-        QMessageBox.information(MainWindow, 'Welcome', 'PyQt5 + Raspberyy PI')
+	print("Button Pressed")
+	QMessageBox.information(MainWindow, 'Welcome', 'PyQt5 + Raspberyy PI')
+    
 
+def ledToggle():
+        if led.is_lit:
+            led.off()
+        else:
+            led.on()
+        
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -36,6 +48,7 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(_translate("MainWindow", "Message Box"))
         self.pushButton.setText(_translate("MainWindow", "Click Me"))
         self.pushButton.clicked.connect(btn_clicked)
+    
 
 import sys
 app=QtWidgets.QApplication(sys.argv)
